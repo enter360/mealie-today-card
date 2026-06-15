@@ -36,6 +36,10 @@ A custom Lovelace card for [Home Assistant](https://www.home-assistant.io/) that
 
 ### Via HACS (Recommended)
 
+[![Add to HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=enter360&repository=mealie-today-card&category=plugin)
+
+Click the button above, or add manually:
+
 1. Open **HACS** in Home Assistant
 2. Go to **Frontend**
 3. Click **⋮ → Custom repositories**
