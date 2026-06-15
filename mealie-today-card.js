@@ -815,8 +815,108 @@ class MealieTodayCard extends HTMLElement {
   }
 }
 
+// ─── Config Editor ────────────────────────────────────────────────────────────
+
+const EDITOR_STYLES = `
+  .editor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  ha-textfield { width: 100%; }
+  .field-hint {
+    font-size: 12px;
+    color: var(--secondary-text-color);
+    margin-top: -8px;
+    padding-left: 4px;
+  }
+`;
+
+class MealieTodayCardEditor extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this._config = {};
+  }
+
+  setConfig(config) {
+    this._config = { ...config };
+    if (this.shadowRoot.querySelector(".editor-form")) {
+      this._updateValues();
+    } else {
+      this._render();
+    }
+  }
+
+  _render() {
+    this.shadowRoot.innerHTML = `
+      <style>${EDITOR_STYLES}</style>
+      <div class="editor-form">
+        <ha-textfield
+          label="Mealie URL"
+          data-field="mealie_url"
+          placeholder="http://mealie:9000"
+          required
+          auto-validate
+          error-message="Required"
+        ></ha-textfield>
+        <p class="field-hint">Base URL of your Mealie instance (no trailing slash)</p>
+        <ha-textfield
+          label="API Token"
+          data-field="api_token"
+          placeholder="your-long-lived-api-token"
+          required
+          auto-validate
+          error-message="Required"
+        ></ha-textfield>
+        <p class="field-hint">Generate in Mealie → User Profile → API Tokens</p>
+        <ha-textfield
+          label="Card Title"
+          data-field="title"
+          placeholder="Today's Meals"
+        ></ha-textfield>
+      </div>
+    `;
+    this._updateValues();
+    this.shadowRoot.querySelectorAll("ha-textfield").forEach((el) => {
+      el.addEventListener("change", this._valueChanged.bind(this));
+    });
+  }
+
+  _updateValues() {
+    const map = {
+      mealie_url: this._config.mealie_url ?? "",
+      api_token: this._config.api_token ?? "",
+      title: this._config.title ?? "",
+    };
+    this.shadowRoot.querySelectorAll("ha-textfield").forEach((el) => {
+      el.value = map[el.dataset.field] ?? "";
+    });
+  }
+
+  _valueChanged(e) {
+    const field = e.target.dataset.field;
+    const value = e.target.value.trim();
+    if (!field) return;
+
+    const newConfig = { ...this._config, [field]: value };
+    if (!value && field === "title") delete newConfig[field];
+    this._config = newConfig;
+
+    this.dispatchEvent(
+      new CustomEvent("config-changed", {
+        detail: { config: this._config },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+}
+
 // ─── Register ─────────────────────────────────────────────────────────────────
 
+customElements.define("mealie-today-card-editor", MealieTodayCardEditor);
 customElements.define("mealie-today-card", MealieTodayCard);
 
 window.customCards = window.customCards || [];
