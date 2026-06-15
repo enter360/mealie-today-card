@@ -17,4 +17,4 @@ mealie_url: http://mealie:9000
 api_token: YOUR_API_TOKEN
 ```
 
-Full documentation and all config options are in the [README](https://github.com/YOUR_GITHUB_USERNAME/mealie-today-card#readme).
+Full documentation and all config options are in the [README](https://github.com/enter360/mealie-today-card#readme).

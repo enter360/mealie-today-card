@@ -1,7 +1,7 @@
 # 🍽 Mealie Today Card
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
-[![GitHub Release](https://img.shields.io/github/release/YOUR_GITHUB_USERNAME/mealie-today-card.svg)](https://github.com/YOUR_GITHUB_USERNAME/mealie-today-card/releases)
+[![GitHub Release](https://img.shields.io/github/release/enter360/mealie-today-card.svg)](https://github.com/enter360/mealie-today-card/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A custom Lovelace card for [Home Assistant](https://www.home-assistant.io/) that displays today's planned meals from [Mealie](https://mealie.io/) — with a tap-to-expand detail view showing ingredients, step-by-step instructions, recipe image, and prep/cook times.
@@ -39,13 +39,13 @@ A custom Lovelace card for [Home Assistant](https://www.home-assistant.io/) that
 1. Open **HACS** in Home Assistant
 2. Go to **Frontend**
 3. Click **⋮ → Custom repositories**
-4. Add `https://github.com/YOUR_GITHUB_USERNAME/mealie-today-card` with category **Dashboard**
+4. Add `https://github.com/enter360/mealie-today-card` with category **Dashboard**
 5. Click **Install** on the Mealie Today Card entry
 6. Reload your browser
 
 ### Manual
 
-1. Download `mealie-today-card.js` from the [latest release](https://github.com/YOUR_GITHUB_USERNAME/mealie-today-card/releases/latest)
+1. Download `mealie-today-card.js` from the [latest release](https://github.com/enter360/mealie-today-card/releases/latest)
 2. Copy it to `config/www/mealie-today-card.js`
 3. In Home Assistant go to **Settings → Dashboards → ⋮ → Resources → Add Resource**
    - URL: `/local/mealie-today-card.js`
