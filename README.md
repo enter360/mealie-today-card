@@ -28,7 +28,6 @@ A custom Lovelace card for [Home Assistant](https://www.home-assistant.io/) that
 - Home Assistant **2023.8** or later
 - [Mealie](https://mealie.io/) **v2.0+** (self-hosted)
 - The official [Mealie integration](https://www.home-assistant.io/integrations/mealie/) installed in HA
-- A Mealie **long-lived API token** (generated in Mealie → User Profile → API Tokens)
 
 ---
 
@@ -64,36 +63,36 @@ Add the card to your dashboard using the YAML editor:
 
 ```yaml
 type: custom:mealie-today-card
-mealie_url: http://mealie:9000
-api_token: YOUR_LONG_LIVED_API_TOKEN
-title: "Today's Meals"
+config_entry_id: YOUR_CONFIG_ENTRY_ID
+title: "Today's Meals"           # optional
+mealie_url: http://mealie:9000   # optional — only needed for recipe images
+debug: false                     # optional — logs raw API responses to console
 ```
 
 ### Options
 
 | Option | Type | Required | Default | Description |
 |---|---|---|---|---|
-| `mealie_url` | `string` | ✅ | — | Base URL of your Mealie instance (no trailing slash) |
-| `api_token` | `string` | ✅ | — | Mealie long-lived API token |
+| `config_entry_id` | `string` | ✅ | — | HA Mealie integration entry ID |
 | `title` | `string` | ❌ | `Today's Meals` | Card header title |
+| `mealie_url` | `string` | ❌ | — | Base URL of your Mealie instance — only used to display recipe images |
+| `debug` | `boolean` | ❌ | `false` | Log raw API responses to the browser console |
 
-### Getting your API token
+### Finding your Config Entry ID
 
-1. Sign in to your Mealie instance
-2. Go to **User Profile → Manage API Tokens**
-3. Enter a name (e.g. `Home Assistant`) and click **Generate**
-4. Copy the token and paste it into your card config
+1. In Home Assistant go to **Developer Tools → Actions**
+2. Select the action `mealie.get_mealplan`
+3. Switch to **YAML mode**
+4. Copy the value of `config_entry_id`
 
 ---
 
 ## How it works
 
-The card calls the Mealie REST API directly using your token:
+The card calls the Mealie integration's HA service actions via the websocket — no direct browser-to-Mealie HTTP calls, so CORS is never an issue:
 
-- **`GET /api/households/mealplans?start_date=TODAY&end_date=TODAY`** — fetches today's meal plan entries
-- **`GET /api/recipes/{slug}`** — fetches full recipe details when you tap a meal
-
-This means it works independently of any HA sensor setup — just the official Mealie integration for auth context, and direct API calls for the card data.
+- **`mealie.get_mealplan`** with today's date — fetches today's meal plan entries
+- **`mealie.get_recipe`** with the recipe ID — fetches full recipe details when you tap a meal
 
 ---
 

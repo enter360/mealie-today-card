@@ -13,8 +13,9 @@ Tap any meal to open a detail sheet with the recipe image, ingredient list with 
 
 ```yaml
 type: custom:mealie-today-card
-mealie_url: http://mealie:9000
-api_token: YOUR_API_TOKEN
+config_entry_id: YOUR_CONFIG_ENTRY_ID
 ```
+
+Find your `config_entry_id` in **Developer Tools → Actions → mealie.get_mealplan → YAML mode**.
 
 Full documentation and all config options are in the [README](https://github.com/enter360/mealie-today-card#readme).
